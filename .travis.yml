@@ -1,0 +1,14 @@
+language: objective-c
+osx_image: xcode8
+
+env:
+  - ACTION=test PLATFORM=Mac DESTINATION='platform=OS X'
+  - ACTION=test PLATFORM=iOS DESTINATION='platform=iOS Simulator,name=iPhone 6S' UUID='7FC06F6D-AF72-4B38-9A96-1F934EA2E27F'
+  - tvOS= DST='platform=tvOS Simulator,name=Apple TV 1080p' UUID='0DF1B136-A3A7-4C51-AE6E-CFEFDF52DA24' ACTION=test
+
+install:
+  - carthage bootstrap --platform $PLATFORM
+
+script:
+  - if [ -z "$UUID" ]; then xcrun instruments -w "$UUID" || true; sleep 15; fi
+  - set -o pipefail && xcodebuild -scheme PMKAccounts -destination "$DESTINATION" $ACTION | xcpretty
