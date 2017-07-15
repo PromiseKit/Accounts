@@ -1,5 +1,5 @@
 language: objective-c
-osx_image: xcode8
+osx_image: xcode8.3
 
 env:
   - PLATFORM=Mac
@@ -19,7 +19,6 @@ script:
     Mac)
       xcodebuild -scheme PMKAccounts test | xcpretty;;
     iOS)
-      xcrun instruments -w "$UUID";
-      sleep 15;
+      open -a "simulator" --args -CurrentDeviceUDID "$UUID";
       xcodebuild -scheme PMKAccounts -destination "id=$UUID" test | xcpretty;;
     esac
