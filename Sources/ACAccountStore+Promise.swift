@@ -16,12 +16,12 @@ import PromiseKit
 extension ACAccountStore {
     /// Renews account credentials when the credentials are no longer valid.
     public func renewCredentials(for account: ACAccount) -> Promise<ACAccountCredentialRenewResult> {
-        return Promise(.pending) { renewCredentials(for: account, completion: $0.resolve) }
+        return Promise { renewCredentials(for: account, completion: $0.resolve) }
     }
 
     /// Obtains permission to access protected user properties.
     public func requestAccessToAccounts(with type: ACAccountType, options: [AnyHashable: Any]? = nil) -> Promise<Void> {
-        return Promise(.pending) { seal in
+        return Promise { seal in
             requestAccessToAccounts(with: type, options: options, completion: { granted, error in
                 if granted {
                     seal.fulfill(())
@@ -36,12 +36,12 @@ extension ACAccountStore {
 
     /// Saves an account to the Accounts database.
     public func saveAccount(_ account: ACAccount) -> Promise<Void> {
-        return Promise(.pending) { saveAccount(account, withCompletionHandler: $0.resolve) }.asVoid()
+        return Promise { saveAccount(account, withCompletionHandler: $0.resolve) }.asVoid()
     }
 
     /// Removes an account from the account store.
     public func removeAccount(_ account: ACAccount) -> Promise<Void> {
-        return Promise(.pending) { removeAccount(account, withCompletionHandler: $0.resolve) }.asVoid()
+        return Promise { removeAccount(account, withCompletionHandler: $0.resolve) }.asVoid()
     }
 
     /// PromiseKit ACAccountStore errors
