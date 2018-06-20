@@ -18,6 +18,8 @@ class Test_ACAccountStore_Swift: XCTestCase {
         MockAccountStore().renewCredentials(for: dummy).done { result in
             XCTAssertEqual(result, ACAccountCredentialRenewResult.renewed)
             ex.fulfill()
+        }.catch {
+            XCTFail("\($0)")
         }
 
         waitForExpectations(timeout: 1)
@@ -35,6 +37,8 @@ class Test_ACAccountStore_Swift: XCTestCase {
         let type = store.accountType(withAccountTypeIdentifier: ACAccountTypeIdentifierFacebook)!
         store.requestAccessToAccounts(with: type).done { _ in
             ex.fulfill()
+        }.catch {
+            XCTFail("\($0)")
         }
 
         waitForExpectations(timeout: 1)
@@ -50,6 +54,8 @@ class Test_ACAccountStore_Swift: XCTestCase {
         let ex = expectation(description: "")
         MockAccountStore().saveAccount(dummy).done { _ in
             ex.fulfill()
+        }.catch {
+            XCTFail("\($0)")
         }
 
         waitForExpectations(timeout: 1)
@@ -65,6 +71,8 @@ class Test_ACAccountStore_Swift: XCTestCase {
         let ex = expectation(description: "")
         MockAccountStore().removeAccount(dummy).done { _ in
             ex.fulfill()
+        }.catch {
+            XCTFail("\($0)")
         }
 
         waitForExpectations(timeout: 1)
